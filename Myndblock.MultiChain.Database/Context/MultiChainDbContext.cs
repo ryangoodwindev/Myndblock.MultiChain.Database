@@ -26,9 +26,11 @@ namespace Myndblock.MultiChain.Database
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // throw an ArgumentException when optionsBuilder is not configured
             if (!optionsBuilder.IsConfigured)
                 throw new ArgumentException("DbContextOptionsBuilder is not configured");
 
+            // pass optionsBuilder to underlying method
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -66,6 +68,7 @@ namespace Myndblock.MultiChain.Database
                 .Property(prop => prop.RowVersion)
                 .IsRowVersion();
 
+            // pass modelBuilder to underlying method
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -10,7 +10,7 @@ using Myndblock.MultiChain.Database;
 namespace Myndblock.MultiChain.Database.Migrations
 {
     [DbContext(typeof(MultiChainDbContext))]
-    [Migration("20200121003317_Create_Initial_Schema")]
+    [Migration("20200121012203_Create_Initial_Schema")]
     partial class Create_Initial_Schema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
