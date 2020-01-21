@@ -48,10 +48,12 @@ namespace Myndblock.MultiChain.Database
                 .Property(prop => prop.Id)
                 .ValueGeneratedOnAdd();
 
+            // set CreatedBy by to Optional
             modelBuilder.Entity<TransactionModel>()
                 .Property(prop => prop.CreatedBy)
                 .IsRequired(false);
 
+            // set LastModifiedBy by to Optional
             modelBuilder.Entity<TransactionModel>()
                 .Property(prop => prop.LastModifiedBy)
                 .IsRequired(false);
@@ -59,20 +61,28 @@ namespace Myndblock.MultiChain.Database
             // infer that CreatedOn should be generated OnAdd
             modelBuilder.Entity<TransactionModel>()
                 .Property(prop => prop.CreatedOn)
+                .HasValueGenerator(typeof(UtcNowValueGenerator))
                 .ValueGeneratedOnAdd();
 
             // infer that LastModifiedOn should be generated OnAddOrUpdate
             modelBuilder.Entity<TransactionModel>()
                 .Property(prop => prop.LastModifiedOn)
-                .ValueGeneratedOnAddOrUpdate();
+                .HasValueGenerator(typeof(UtcNowValueGenerator))
+                .ValueGeneratedOnAdd();
 
             // infer that the Txid property should be treated as a unique index
             modelBuilder.Entity<TransactionModel>()
                .HasIndex(index => index.Txid)
                .IsUnique();
 
+            // set Txid by to Optional
             modelBuilder.Entity<TransactionModel>()
                .Property(prop => prop.Txid)
+               .IsRequired(false);
+
+            // set ErrorMessage by to Optional
+            modelBuilder.Entity<TransactionModel>()
+               .Property(prop => prop.ErrorMessage)
                .IsRequired(false);
 
             // infer that the RowVersion should be used to hand optimistic concurrency

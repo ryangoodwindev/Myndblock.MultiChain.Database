@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace Myndblock.MultiChain.Database.Tests
@@ -54,12 +55,14 @@ namespace Myndblock.MultiChain.Database.Tests
             var rounds = 40;
             for (int i = 0; i < rounds; i++)
             {
-                var transaction = new TransactionModel("MyBlockchain", "issuemore", "some txid we could store")
+                var transaction = new TransactionModel("MyBlockchain", "issuemore", $"{Guid.NewGuid()}")
                 {
                     CreatedBy = nameof(CreateAsyncTest),
                     LastModifiedBy = nameof(CreateAsyncTest)
                 };
 
+                /* .SaveChangesAsync() is called automatically within the contract */
+                /* We don't need to call .SaveChangesAsync() again here for any reason */
                 await _contract.CreateAsync(transaction);
             }
 
@@ -69,7 +72,17 @@ namespace Myndblock.MultiChain.Database.Tests
         [Test]
         public async Task ReadAsyncTest()
         {
+            var transaction = new TransactionModel("MyBlockchain", "issuemore", $"{Guid.NewGuid()}")
+            {
+                CreatedBy = nameof(CreateAsyncTest),
+                LastModifiedBy = nameof(CreateAsyncTest)
+            };
 
+            /* .SaveChangesAsync() is called automatically within the contract */
+            /* We don't need to call .SaveChangesAsync() again here for any reason */
+            await _contract.CreateAsync(transaction);
+
+            var read = await _contract.ReadAsync(transaction.Id);
         }
 
         [Test]
