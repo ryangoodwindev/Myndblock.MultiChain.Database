@@ -9,10 +9,7 @@ namespace Myndblock.MultiChain.Database
     /// </summary>
     public sealed class MultiChainContextFactory : IDesignTimeDbContextFactory<MultiChainDbContext>
     {
-        /// <summary>
-        /// Dummy ConnectionString value since we just need to use this for scaffolding a migration during design-time
-        /// </summary>
-        private const string TestConnectionString = @"Connection string only necessary if we are trying to apply the migration, in this case we are simply using it to generated the migration at design-time.";
+        public MultiChainContextFactory() { }
 
         /// <summary>
         /// Create a new isntace of MultiChainDbContext
@@ -23,7 +20,7 @@ namespace Myndblock.MultiChain.Database
         {
             // create new OptionsBuilder instance based on MultiChainDbContext
             var optionsBuilder = new DbContextOptionsBuilder<MultiChainDbContext>();
-            optionsBuilder.UseSqlServer(TestConnectionString); // use SqlServer connection type
+            optionsBuilder.UseSqlServer("No connection string necessary since we are just using this factory to create migrations.");
 
             return new MultiChainDbContext(optionsBuilder.Options);
         }

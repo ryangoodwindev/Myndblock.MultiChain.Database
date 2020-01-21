@@ -17,7 +17,8 @@ namespace Myndblock.MultiChain.Database
         /// </summary>
         /// <param name="transactions"></param>
         /// <param name="logger"></param>
-        public TransactionLog(MultiChainDbContext transactions, ILogger<ITransactionRepo> logger)
+        public TransactionLog(MultiChainDbContext transactions, 
+            ILogger<ITransactionRepo> logger)
         {
             _transactions = transactions;
             _logger = logger;
@@ -42,6 +43,7 @@ namespace Myndblock.MultiChain.Database
         public Task CreateAsync(TransactionModel model)
         {
             _transactions.Entry(model).State = EntityState.Added;
+            _logger.LogInformation("", $"Create action requested for MultiChain node transaction {model.Id}");
             return _transactions.SaveChangesAsync();
         }
 
@@ -50,8 +52,11 @@ namespace Myndblock.MultiChain.Database
         /// </summary>
         /// <param name="id">TransactionModel primary key value</param>
         /// <returns></returns>
-        public Task<TransactionModel> ReadAsync(Guid? id) =>
-            _transactions.Transactions.FirstOrDefaultAsync(first => first.Id == id);
+        public Task<TransactionModel> ReadAsync(Guid? id)
+        {
+            _logger.LogInformation("", $"Read action requested for MultiChain node transaction {id}");
+            return _transactions.Transactions.FirstOrDefaultAsync(first => first.Id == id);
+        }
 
         /// <summary>
         /// Update an existing TransactionModel log item
@@ -65,6 +70,7 @@ namespace Myndblock.MultiChain.Database
                 throw EntityIdMismatchException();
 
             _transactions.Entry(model).State = EntityState.Modified;
+            _logger.LogInformation("", $"Update action requested for MultiChain node transaction {id}");
             return _transactions.SaveChangesAsync();
         }
 
@@ -80,6 +86,7 @@ namespace Myndblock.MultiChain.Database
                 throw EntityIdMismatchException();
 
             _transactions.Entry(model).State = EntityState.Deleted;
+            _logger.LogInformation("", $"Delete action requested for MultiChain node transaction {id}");
             return _transactions.SaveChangesAsync();
         }
 
@@ -88,15 +95,18 @@ namespace Myndblock.MultiChain.Database
         /// Read all transaction from the transction log
         /// </summary>
         /// <returns></returns>
-        public async Task<IList<TransactionModel>> ReadAllAsync() => 
-            await _transactions.Transactions.ToListAsync();
+        public async Task<IList<TransactionModel>> ReadAllAsync()
+        {
+            _logger.LogInformation("", $"All MultiChain node transactions requested");
+            return await _transactions.Transactions.ToListAsync();
+        }
 
         /// <summary>
         /// Log and throw ArgumentException
         /// </summary>
         /// <param name="errorMessage">Error message to be thrown with the new ArgumentException</param>
         /// <returns></returns>
-        private ArgumentException EntityIdMismatchException(string errorMessage = "The id and entity id do not match. Please try again")
+        private ArgumentException EntityIdMismatchException(string errorMessage = "The id and entity id do not match.")
         {
             _logger.LogError("", errorMessage);
             throw new ArgumentException(errorMessage);

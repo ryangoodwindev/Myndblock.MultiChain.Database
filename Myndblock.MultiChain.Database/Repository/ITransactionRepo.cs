@@ -14,12 +14,12 @@ namespace Myndblock.MultiChain.Database
         /// <summary>
         /// Event logging service
         /// </summary>
-        public ILogger<ITransactionRepo> Logger { get; }
+        ILogger<ITransactionRepo> Logger { get; }
 
         /// <summary>
         /// Transaction log database context
         /// </summary>
-        public MultiChainDbContext Transactions { get; }
+        MultiChainDbContext Transactions { get; }
 
 
         /// <summary>

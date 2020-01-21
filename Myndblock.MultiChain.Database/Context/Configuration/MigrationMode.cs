@@ -3,7 +3,7 @@
     /// <summary>
     /// Available and supported migration options for SQL service providers
     /// </summary>
-    public enum MigrationOption
+    public enum MigrationMode
     {
         /// <summary>
         /// Use this option if the consumer will trigger the "Add-Migration" feature

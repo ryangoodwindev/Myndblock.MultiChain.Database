@@ -14,11 +14,11 @@ namespace Myndblock.MultiChain.Database.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     LastModifiedOn = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: false),
-                    LastModifiedBy = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    LastModifiedBy = table.Column<string>(nullable: true),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: false),
                     Blockchain = table.Column<string>(nullable: false),
-                    Txid = table.Column<string>(nullable: false),
+                    Txid = table.Column<string>(nullable: true),
                     TargetMethod = table.Column<string>(nullable: false),
                     ErrorMessage = table.Column<string>(nullable: false)
                 },
@@ -31,7 +31,8 @@ namespace Myndblock.MultiChain.Database.Migrations
                 name: "IX_multichain_transaction_log_Txid",
                 table: "multichain_transaction_log",
                 column: "Txid",
-                unique: true);
+                unique: true,
+                filter: "[Txid] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

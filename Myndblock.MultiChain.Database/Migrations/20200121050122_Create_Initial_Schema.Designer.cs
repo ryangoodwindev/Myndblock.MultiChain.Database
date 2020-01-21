@@ -10,7 +10,7 @@ using Myndblock.MultiChain.Database;
 namespace Myndblock.MultiChain.Database.Migrations
 {
     [DbContext(typeof(MultiChainDbContext))]
-    [Migration("20200121012203_Create_Initial_Schema")]
+    [Migration("20200121050122_Create_Initial_Schema")]
     partial class Create_Initial_Schema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,6 @@ namespace Myndblock.MultiChain.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -44,7 +43,6 @@ namespace Myndblock.MultiChain.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastModifiedOn")
@@ -62,13 +60,13 @@ namespace Myndblock.MultiChain.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Txid")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Txid")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Txid] IS NOT NULL");
 
                     b.ToTable("multichain_transaction_log");
                 });

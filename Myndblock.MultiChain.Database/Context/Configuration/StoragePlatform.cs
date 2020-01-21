@@ -3,7 +3,7 @@
     /// <summary>
     /// Available and supported options for SQL service providers
     /// </summary>
-    public enum StorageSystem
+    public enum StoragePlatform
     {
         /// <summary>
         /// Use this option if a SQL storage device is running behind the application.
