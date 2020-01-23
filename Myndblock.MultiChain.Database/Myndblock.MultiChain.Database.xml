@@ -1,0 +1,433 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Myndblock.MultiChain.Database</name>
+    </assembly>
+    <members>
+        <member name="T:Myndblock.MultiChain.Database.BatchSize">
+            <summary>
+            Batch size helper
+            </summary>
+        </member>
+        <member name="T:Myndblock.MultiChain.Database.MigrationMode">
+            <summary>
+            Available and supported migration options for SQL service providers
+            </summary>
+        </member>
+        <member name="F:Myndblock.MultiChain.Database.MigrationMode.Manual">
+            <summary>
+            Use this option if the consumer will trigger the "Add-Migration" feature
+            manually. This option WILL NOT create the database or apply any pending
+            migration(s) to local storage automatically.
+            </summary>
+        </member>
+        <member name="F:Myndblock.MultiChain.Database.MigrationMode.Auto">
+            <summary>
+            Use this option if the application will trigger the .Migrate() feature
+            automatically each time the application starts. This option WILL create 
+            the database and apply any pending migration(s) to local storage.
+            </summary>
+        </member>
+        <member name="T:Myndblock.MultiChain.Database.MultiChainDbOptions">
+            <summary>
+            MultiChain database configuration properties/settings
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.MultiChainDbOptions.ConnectionString">
+            <summary>
+            Database connection string
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.MultiChainDbOptions.MigrationMode">
+            <summary>
+            Handle the MultchainContext migration either manually (Manual) or automatically (Auto)
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.MultiChainDbOptions.StoragePlatform">
+            <summary>
+            Type of storage system/device (options are SqlServer and SqlLite)
+            </summary>
+        </member>
+        <member name="T:Myndblock.MultiChain.Database.StoragePlatform">
+            <summary>
+            Available and supported options for SQL service providers
+            </summary>
+        </member>
+        <member name="F:Myndblock.MultiChain.Database.StoragePlatform.SqlServer">
+            <summary>
+            Use this option if a SQL storage device is running behind the application.
+            </summary>
+        </member>
+        <member name="F:Myndblock.MultiChain.Database.StoragePlatform.SqlLite">
+            <summary>
+            Use this option is a SQL Lite storage device is running behind the application.
+            </summary>
+        </member>
+        <member name="T:Myndblock.MultiChain.Database.MultiChainContextFactory">
+            <summary>
+            Do not use this factory directly, it is only used to create a migration (Add-Migration)
+            during design-time in the absence of an actual Dependency Injection Pipeline container.
+            </summary>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.MultiChainContextFactory.CreateDbContext(System.String[])">
+            <summary>
+            Create a new isntace of MultiChainDbContext
+            </summary>
+            <param name="args">Do not use this, thanks.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Myndblock.MultiChain.Database.MultiChainDbContext">
+            <summary>
+            MultiChain database context offers transaction logging for the target blockchain node
+            </summary>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.MultiChainDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Myndblock.MultiChain.Database.MultiChainDbContext})">
+            <summary>
+            MultiChain database context offers transaction logging for the target blockchain node
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.MultiChainDbContext.Transactions">
+            <summary>
+            Connection to the TransactionModel table
+            </summary>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.MultiChainDbContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+            OnConfiguring override will detect when the <paramref name="optionsBuilder"/> is not configured
+            </summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.MultiChainDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            OnModelCreating override handles configuring the backing data models using Fluent API <paramref name="modelBuilder"/>
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:Myndblock.MultiChain.Database.Data.BaseModel">
+            <summary>
+            Any data model class in Myndblock.MultiChain.Database should inherit this base class,
+            so as to inherit the necessary backing fields
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.Data.BaseModel.Id">
+            <summary>
+            Primary key for this MultiChain transaction
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.Data.BaseModel.CreatedOn">
+            <summary>
+            Date and time this record was created.
+            Should alwyas be UTC time to handle consumer locales correctly.
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.Data.BaseModel.LastModifiedOn">
+            <summary>
+            Date and time this record was last modified
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.Data.BaseModel.CreatedBy">
+            <summary>
+            Who or what created this record.
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.Data.BaseModel.LastModifiedBy">
+            <summary>
+            Who or what modified this record last.
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.Data.BaseModel.RowVersion">
+            <summary>
+            Concurrency token
+            </summary>
+        </member>
+        <member name="T:Myndblock.MultiChain.Database.TransactionModel">
+            <summary>
+            Record entity used to store a MultiChain transaction
+            </summary>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionModel.#ctor">
+            <summary>
+            Record entity used to store a MultiChain transaction
+            </summary>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionModel.#ctor(System.String,System.String)">
+            <summary>
+            Record entity used to store a MultiChain transaction
+            </summary>
+            <param name="blockchain">Target MultiChain blockchain node name</param>
+            <param name="targetMethod">Target MultiChain blockchain node method</param>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionModel.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Record entity used to store a MultiChain transaction
+            </summary>
+            <param name="blockchain">Target MultiChain blockchain node name</param>
+            <param name="targetMethod">Target MultiChain blockchain node method</param>
+            <param name="txid">Transaction id resulting from a successful MultiChain blockchain node transaction or interaction</param>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.TransactionModel.Blockchain">
+            <summary>
+            Target blockchain node
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.TransactionModel.Txid">
+            <summary>
+            MultiChain transaction id value
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.TransactionModel.TargetMethod">
+            <summary>
+            MultiChain blockchain method called for this transaction
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.TransactionModel.ErrorMessage">
+            <summary>
+            MultiChain error message
+            </summary>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionModel.IsSuccess">
+            <summary>
+            Determines if the transaction is or was successful
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Myndblock.MultiChain.Database.MultiChainSqlServerExtension">
+            <summary>
+            Offers extension methods used to incorporate the MultiChainDbContext
+            into a DI pipeline and/or application service container
+            </summary>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.MultiChainSqlServerExtension.ConfigureMultiChainDbStorage(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            The ConfigureMultiChainDbStorage extension method creates a MultiChainDbContext
+            that can be used to create a transactin log external to the blockchain node.
+            Configure the MultiChainDbContext storage mechanisms within the application
+            <paramref name="serviceCollection"/> DI pipeline using the
+            <paramref name="configuration"/> parameter.
+            
+            <para>
+                The MultiChainDbContext may be injected directly. Or, the provided 
+                ITransactionRepo contract may be used instead, which offers CRUD and
+                ReadAll functionality along with exposing the MultiChainDbContext
+                and ILogging services as public properties, for ease of use.
+            </para>
+            
+            </summary>
+            <param name="serviceCollection">Dependency injection pipeline services collection</param>
+            <param name="configuration">IConfiguration pipeline</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.MultiChainSqlServerExtension.ConfigureMultiChainDbStorage(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Myndblock.MultiChain.Database.MultiChainDbOptions})">
+            <summary>
+            The ConfigureMultiChainDbStorage extension method creates a MultiChainDbContext
+            that can be used to create a transactin log external to the blockchain node.
+            Configure the MultiChainDbContext storage mechanisms within the application
+            <paramref name="serviceCollection"/> DI pipeline using the
+            <paramref name="configureDbOptions"/> parameter.
+            
+            <para>
+                The MultiChainDbContext may be injected directly. Or, the provided 
+                ITransactionRepo contract may be used instead, which offers CRUD and
+                ReadAll functionality along with exposing the MultiChainDbContext
+                and ILogging services as public properties, for ease of use.
+            </para>
+            
+            </summary>
+            <param name="serviceCollection">Dependency injection pipeline services collection</param>
+            <param name="configureDbOptions">
+                Use this optional parameter to explicitly configure the ConnectionString, StorageSystem, and MigrationOption
+                MultiChainDbOptions properties, required to enable the MultiChainDbContext. Otherwise we look
+                to the IConfiguration pipeline to configure the MultiChainDbOptions. We support SQL Server and SQlite.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="T:Myndblock.MultiChain.Database.ITransactionRepo">
+            <summary>
+            ITransactionRepo contract defines methods that should be
+            available to interact with a MultiChain transaction repository
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.ITransactionRepo.Logger">
+            <summary>
+            Event logging service
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.ITransactionRepo.Context">
+            <summary>
+            Transaction log database context
+            </summary>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.ITransactionRepo.CreateAsync(Myndblock.MultiChain.Database.TransactionModel)">
+            <summary>
+            Create a new TransactionModel log item
+            </summary>
+            <param name="model">Target TransactionModel entity to be created in local storage</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.ITransactionRepo.CreateBatchAsync(System.Collections.Generic.IList{Myndblock.MultiChain.Database.TransactionModel},System.Int32)">
+            <summary>
+            Create a batch of TransactionModels log items
+            </summary>
+            <param name="models">Collection of TransactionModels that will be created in local storatge</param>
+            <param name="batchSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.ITransactionRepo.ReadAsync(System.Nullable{System.Guid})">
+            <summary>
+            Read a single TransactioModel log item
+            </summary>
+            <param name="id">TransactionModel primary key value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.ITransactionRepo.UpdateAsync(System.Nullable{System.Guid},Myndblock.MultiChain.Database.TransactionModel)">
+            <summary>
+            Update an existing TransactionModel log item
+            </summary>
+            <param name="id">TransactionModel primary key value</param>
+            <param name="model">Target TransactionModel entity to be updated in local storage</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.ITransactionRepo.UpdateBatchAsync(System.Collections.Generic.IList{Myndblock.MultiChain.Database.TransactionModel},System.Int32)">
+            <summary>
+            Update a batch of TransactionModels log items
+            </summary>
+            <param name="models">Collection of TransactionModels that will be created in local storatge</param>
+            <param name="batchSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.ITransactionRepo.DeleteAsync(System.Nullable{System.Guid},Myndblock.MultiChain.Database.TransactionModel)">
+            <summary>
+            Delete an existing TransactionModel log item
+            </summary>
+            <param name="id">TransactionModel primary key value</param>
+            <param name="model">Target TransactionModel entity to be removed from local storage</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.ITransactionRepo.DeleteBatchAsync(System.Collections.Generic.IList{Myndblock.MultiChain.Database.TransactionModel},System.Int32)">
+            <summary>
+            Delete a batch of TransactionModels log items
+            </summary>
+            <param name="models">Collection of TransactionModels that will be created in local storatge</param>
+            <param name="batchSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.ITransactionRepo.ReadAllAsync(System.String)">
+            <summary>
+            Read all transaction from the transction log
+            </summary>
+            <returns></returns>
+            <param name="blockchain">(Optional) Filter by target MultiChain blockchain name</param>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.ITransactionRepo.PaginateAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Built-in pagination support.
+            </summary>
+            <param name="blockchain">(Optional) Filter by target MultiChain blockchain name</param>
+            <param name="start">(Optional) Start index for page result. Default is 0 (zero).</param>
+            <param name="rows">(Optional) Number of rows to take using <paramref name="start"/> as a reference point. Default is 100.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.#ctor(Myndblock.MultiChain.Database.MultiChainDbContext,Microsoft.Extensions.Logging.ILogger{Myndblock.MultiChain.Database.ITransactionRepo})">
+            <summary>
+            Transaction log implements ITransactionRepo
+            </summary>
+            <param name="transactions"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.TransactionLog.Context">
+            <summary>
+            Transaction log database context
+            </summary>
+        </member>
+        <member name="P:Myndblock.MultiChain.Database.TransactionLog.Logger">
+            <summary>
+            Event logging service
+            </summary>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.CreateAsync(Myndblock.MultiChain.Database.TransactionModel)">
+            <summary>
+            Create a new TransactionModel log item
+            </summary>
+            <param name="model">Target TransactionModel entity to be created in local storage</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.CreateBatchAsync(System.Collections.Generic.IList{Myndblock.MultiChain.Database.TransactionModel},System.Int32)">
+            <summary>
+            Create a batch of TransactionModels log items
+            </summary>
+            <param name="models">Collection of TransactionModels that will be created in local storatge</param>
+            <param name="batchSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.ReadAsync(System.Nullable{System.Guid})">
+            <summary>
+            Read a single TransactioModel log item
+            </summary>
+            <param name="id">TransactionModel primary key value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.UpdateAsync(System.Nullable{System.Guid},Myndblock.MultiChain.Database.TransactionModel)">
+            <summary>
+            Update an existing TransactionModel log item
+            </summary>
+            <param name="id">TransactionModel primary key value</param>
+            <param name="model">Target TransactionModel entity to be updated in local storage</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.UpdateBatchAsync(System.Collections.Generic.IList{Myndblock.MultiChain.Database.TransactionModel},System.Int32)">
+            <summary>
+            Update a batch of TransactionModels log items
+            </summary>
+            <param name="models">Collection of TransactionModels that will be created in local storatge</param>
+            <param name="batchSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.DeleteAsync(System.Nullable{System.Guid},Myndblock.MultiChain.Database.TransactionModel)">
+            <summary>
+            Delete an existing TransactionModel log item
+            </summary>
+            <param name="id">TransactionModel primary key value</param>
+            <param name="model">Target TransactionModel entity to be removed from local storage</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.DeleteBatchAsync(System.Collections.Generic.IList{Myndblock.MultiChain.Database.TransactionModel},System.Int32)">
+            <summary>
+            Delete a batch of TransactionModels log items
+            </summary>
+            <param name="models">Collection of TransactionModels that will be created in local storatge</param>
+            <param name="batchSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.ReadAllAsync(System.String)">
+            <summary>
+            Read all transaction from the transction log
+            </summary>
+            <param name="blockchain">Filter transaction by blockchain name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.PaginateAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Built-in pagination support. Default values will pull the first 100 records for all blockchain names.
+            </summary>
+            <param name="blockchain">(Optional) Filter by target MultiChain blockchain name</param>
+            <param name="start">(Optional) Start index for page result. Default is 0 (zero).</param>
+            <param name="rows">(Optional) Number of rows to take using <paramref name="start"/> as a reference point. Default is 100.</param>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.GetPages(System.Int32,System.Int32)">
+            <summary>
+            Batch size helper
+            </summary>
+            <param name="count">How many total records that will be divided by the <paramref name="batchSize"/> to give us a page count</param>
+            <param name="batchSize">Quantity of records to commit at once</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myndblock.MultiChain.Database.TransactionLog.EntityIdMismatchException(System.String)">
+            <summary>
+            Log and throw ArgumentException
+            </summary>
+            <param name="errorMessage">Error message to be thrown with the new ArgumentException</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

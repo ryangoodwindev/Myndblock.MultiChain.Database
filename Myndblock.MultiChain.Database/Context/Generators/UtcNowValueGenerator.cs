@@ -8,9 +8,6 @@ namespace Myndblock.MultiChain.Database
     {
         public override bool GeneratesTemporaryValues => false;
 
-        protected override object NextValue(EntityEntry entry)
-        {
-            return DateTime.UtcNow;
-        }
+        protected override object NextValue(EntityEntry entry) => DateTime.UtcNow;
     }
 }

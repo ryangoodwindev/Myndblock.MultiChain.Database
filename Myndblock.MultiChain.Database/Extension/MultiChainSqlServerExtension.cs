@@ -17,7 +17,7 @@ namespace Myndblock.MultiChain.Database
         /// that can be used to create a transactin log external to the blockchain node.
         /// Configure the MultiChainDbContext storage mechanisms within the application
         /// <paramref name="serviceCollection"/> DI pipeline using the
-        /// <paramref name="configureDbOptions"/> parameter.
+        /// <paramref name="configuration"/> parameter.
         /// 
         /// <para>
         ///     The MultiChainDbContext may be injected directly. Or, the provided 
@@ -29,11 +29,6 @@ namespace Myndblock.MultiChain.Database
         /// </summary>
         /// <param name="serviceCollection">Dependency injection pipeline services collection</param>
         /// <param name="configuration">IConfiguration pipeline</param>
-        /// <param name="configureDbOptions">
-        ///     Use this optional parameter to explicitly configure the ConnectionString, StorageSystem, and MigrationOption
-        ///     MultiChainDbOptions properties, required to enable the MultiChainDbContext. Otherwise we look
-        ///     to the IConfiguration pipeline to configure the MultiChainDbOptions. We support SQL Server and Sqlite.
-        /// </param>
         /// <returns></returns>
         public static IServiceCollection ConfigureMultiChainDbStorage(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
@@ -102,7 +97,6 @@ namespace Myndblock.MultiChain.Database
         /// 
         /// </summary>
         /// <param name="serviceCollection">Dependency injection pipeline services collection</param>
-        /// <param name="configuration">IConfiguration pipeline</param>
         /// <param name="configureDbOptions">
         ///     Use this optional parameter to explicitly configure the ConnectionString, StorageSystem, and MigrationOption
         ///     MultiChainDbOptions properties, required to enable the MultiChainDbContext. Otherwise we look
