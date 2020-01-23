@@ -20,7 +20,7 @@
 
 ITransactionRepo may be injected to the service pipeline to which provides basic CRUD functions, List features, and built in Pagination and Batching support.
 
-ITransactionRepo also provided direct access to the MultiChainDbContet and ILogger interface. Logging has also been enabled during all CRUD functions.</PackageReleaseNotes>
+ITransactionRepo also provides direct access to the MultiChainDbContet and ILogger interface. Logging has also been enabled during all CRUD functions.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp3.1|AnyCPU'">
